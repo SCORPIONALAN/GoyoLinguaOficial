@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "872208755472",
+    "project_id": "scorplingua",
+    "storage_bucket": "scorplingua.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872208755472:android:7639dd6a704f0ede711395",
+        "android_client_info": {
+          "package_name": "com.example.goyolingua"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872208755472-sr9veg5k449prtcat9mdobd4nd602b8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.goyolingua",
+            "certificate_hash": "3d2d897fef93f76b208d77c668310babd8352d4b"
+          }
+        },
+        {
+          "client_id": "872208755472-pmllbpntitrhs7nboguqdt56qi5htvba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-KTqAKMjR6d9mZoFPR7ipruFHnBsQkAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872208755472-150nsi2p2fagk0fu1ka1lcb5f43ev0v5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "872208755472-merjj3l09v5qf9efsamtb68ud9ecp0qi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.goyolingua"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872208755472:android:c12d56e5d2711f62711395",
+        "android_client_info": {
+          "package_name": "com.example.scorplingua"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872208755472-pmllbpntitrhs7nboguqdt56qi5htvba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-KTqAKMjR6d9mZoFPR7ipruFHnBsQkAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872208755472-150nsi2p2fagk0fu1ka1lcb5f43ev0v5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "872208755472-merjj3l09v5qf9efsamtb68ud9ecp0qi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.goyolingua"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
