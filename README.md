@@ -94,8 +94,9 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 ## 📘 Bitácora del proyecto
 
 - [Día 1: GoyoLingua Definición del proyecto y Creación de Pantallas(UI) (Alan)](./DOC/bitacora1.md)
-- [Día 2: GoyoLingua Inicio de sesión / Navegador / HomeChat / Chat Personal / Home de trotia / Perfil (Alan)](./DOC/bitacora2.md)
+- [Día 2: GoyoLingua Inicio de sesión / Navegador / HomeChat / Chat Personal / Home de targetas / Perfil (Alan)](./DOC/bitacora2.md)
 - [Día 3: Corrección de LogOut y documentacion (Valeria)](./DOC/bitacora3.md)
+- [Día 3: GoyoLingua descripcion y corrección de GoyitoIA](./DOC/bitacora4.md)
 
 ---
 
