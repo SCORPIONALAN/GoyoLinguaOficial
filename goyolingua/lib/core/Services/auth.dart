@@ -38,22 +38,20 @@ class AuthMethods {
     final email = userDetails.email!;
     final username = email.replaceAll("@aragon.unam.mx", "");
     final firstLetter = username.substring(0, 1).toUpperCase();
-
-    //TODO UNA VEZ FINALIZADAS LAS PRUEBAS HABILITAR ESTE CÓDIGO
-    // final isAragon = email.endsWith("@aragon.unam.mx");
-
-    // if (!isAragon) {
-    //   await auth.signOut();
-    //   await googleSignIn.signOut(); // opcional: cerrar sesión automáticamente
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     backgroundColor: Colors.red,
-    //     content: Text(
-    //       "Perdón! solo los correos @aragon.unam.mx pueden iniciar sesión.",
-    //       style: TextStyle(color: Colors.white),
-    //     ),
-    //   ));
-    //   return;
-    // }
+    // Zona de código para tirar error en caso de que no sea Aragonense
+    final isAragon = email.endsWith("@aragon.unam.mx");
+    if (!isAragon) {
+      await auth.signOut();
+      await googleSignIn.signOut(); // opcional: cerrar sesión automáticamente
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(
+          "Perdón! solo los correos @aragon.unam.mx pueden iniciar sesión.",
+          style: TextStyle(color: Colors.white),
+        ),
+      ));
+      return;
+    }
 
     // Verificar si ya existe el usuario en Firestore
     final userDoc = await DatabaseMethods().getUserById(uid);

@@ -104,6 +104,13 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 - [Inteligencia Artificial](./DOC/componentes/GoyitoIA/goyitoIA.md)
 - [Perfil (subir imagenes cerrar sesión)](./DOC/componentes/perfil/perfil.md)
 - [Navegador para enrutamientos](./DOC/componentes/navegador/navegador.md)
+- **Utils**
+- [Funciones para base de Datos](./DOC/componentes/utils/base_de_datos.md)
+- [Shared Preferences](./DOC/componentes/utils/shared_preferences.md)
+
+---
+## Arquitectura general de la APP
+![Arquitectura de todo](./DOC/img/Arquitectura%20de%20todo.png)
 
 ---
 ## Arquitectura del frontend con el backend
@@ -140,6 +147,12 @@ Gracias por ser parte de este proyecto que busca revolucionar el aprendizaje del
 
 El desarrollo de GoyoLingua fue muy extenso debido a los diversos cursos que tomamos como participantes de este proyecto. Logramos muchos avances importantes, pero no logramos crear ejercicios para los usuarios ni crear sus estadisticas. Contemplamos en un futuro hacer eso y que realemente esta app este en su máximo explendor.
 De igual forma por seguir tutoriales nos atascabamos muy seguido y no por eso no podiamos escalar el código como queriamos
+
+---
+## Posibles Errores
+Tuvimos problemas con la camara, por lo que tuvimos que quitarla, de igual forma desconocemos porque puede llegar a fallar el seleccionado de la imagen, por lo que pedimos que si sucede un error ahí vuelva a intentar subir esa imagen.
+
+---
 
 ## Material de referencias
 
