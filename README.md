@@ -110,7 +110,7 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 
 ---
 ## Arquitectura general de la APP
-![Arquitectura de todo](./DOC/img/Arquitectura%20de%20todo.png)
+![Arquitectura de todo](./DOC/img//arqDeTodo.png)
 
 ---
 ## Arquitectura del frontend con el backend
