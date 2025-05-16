@@ -134,3 +134,21 @@ Gracias por ser parte de este proyecto que busca revolucionar el aprendizaje del
 
 ---
 
+## 😞 Que cosas no cumplimos
+
+El desarrollo de GoyoLingua fue muy extenso debido a los diversos cursos que tomamos como participantes de este proyecto. Logramos muchos avances importantes, pero no logramos crear ejercicios para los usuarios ni crear sus estadisticas. Contemplamos en un futuro hacer eso y que realemente esta app este en su máximo explendor.
+De igual forma por seguir tutoriales nos atascabamos muy seguido y no por eso no podiamos escalar el código como queriamos
+
+## Material de referencias
+
+- [🔥📱 Ultimate Chat App with Flutter Firebase | Full Tutorial for Beginners 2025](https://www.youtube.com/watch?v=TWUeE6kz3Lo&t=11437s&ab_channel=ShivamGupta)
+
+- [Login & Sign up | Email & password Auth | Flutter Firebase integration | Authentication](https://www.youtube.com/watch?v=7seYBGMPf84&list=PLEFAsRdcqVXet8G5szQEZL0lMZ9zldGHd&ab_channel=FlutterFly)
+
+- [Flutter Tutorial - Add Custom Fonts & Google Fonts](https://www.youtube.com/watch?v=Gf-cyiWlmEI&ab_channel=HeyFlutter%E2%80%A4com)
+
+-[Creating Custom Theming in Flutter Apps | Styling Flutter widgets based on Theme Data](https://www.youtube.com/watch?v=pdEs7BFl49E&ab_channel=vijaycreations)
+
+-[How to integrate Rest API in Flutter Application](https://www.youtube.com/watch?v=p29G-GVzm8g&list=PL7zgwanvi8_OvGhdNt1pwvN2luynjiH1V&index=6&ab_channel=SnippetCoder)
+
+-[Flutter - Móvil: De cero a experto](https://www.udemy.com/course/flutter-cero-a-experto/?srsltid=AfmBOoq3baiRwLIhldMOxdUxOP8pJenZnOCUv3bJUi8eQ5ImgTNDtKOE)
