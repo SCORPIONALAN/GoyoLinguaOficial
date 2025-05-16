@@ -75,6 +75,8 @@ Este tendrá una **API privada** conectada con **OpenAI**, donde procesaremos:
 - [GoyoLinguaAPI](https://github.com/SCORPIONALAN/GoyoLinguaAPI)
 > Todo esto se procesa en el servidor, y el frontend solo recibe respuestas optimizadas 💡
 
+#### Backend Corriendo en render
+![Render server](./DOC/img/render.png) 
 ---
 
 ## 🧩 Arquitectura General
