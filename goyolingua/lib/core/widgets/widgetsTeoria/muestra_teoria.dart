@@ -20,6 +20,11 @@ class MuestraTeoria extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(nombreLeccion),
+        // Para retroceder entre las lecciones
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
