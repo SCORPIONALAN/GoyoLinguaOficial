@@ -147,8 +147,8 @@ De igual forma por seguir tutoriales nos atascabamos muy seguido y no por eso no
 
 - [Flutter Tutorial - Add Custom Fonts & Google Fonts](https://www.youtube.com/watch?v=Gf-cyiWlmEI&ab_channel=HeyFlutter%E2%80%A4com)
 
--[Creating Custom Theming in Flutter Apps | Styling Flutter widgets based on Theme Data](https://www.youtube.com/watch?v=pdEs7BFl49E&ab_channel=vijaycreations)
+- [Creating Custom Theming in Flutter Apps | Styling Flutter widgets based on Theme Data](https://www.youtube.com/watch?v=pdEs7BFl49E&ab_channel=vijaycreations)
 
--[How to integrate Rest API in Flutter Application](https://www.youtube.com/watch?v=p29G-GVzm8g&list=PL7zgwanvi8_OvGhdNt1pwvN2luynjiH1V&index=6&ab_channel=SnippetCoder)
+- [How to integrate Rest API in Flutter Application](https://www.youtube.com/watch?v=p29G-GVzm8g&list=PL7zgwanvi8_OvGhdNt1pwvN2luynjiH1V&index=6&ab_channel=SnippetCoder)
 
--[Flutter - Móvil: De cero a experto](https://www.udemy.com/course/flutter-cero-a-experto/?srsltid=AfmBOoq3baiRwLIhldMOxdUxOP8pJenZnOCUv3bJUi8eQ5ImgTNDtKOE)
+- [Flutter - Móvil: De cero a experto](https://www.udemy.com/course/flutter-cero-a-experto/?srsltid=AfmBOoq3baiRwLIhldMOxdUxOP8pJenZnOCUv3bJUi8eQ5ImgTNDtKOE) 
