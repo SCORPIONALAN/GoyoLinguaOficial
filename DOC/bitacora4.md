@@ -1,4 +1,4 @@
-# Bitácora 3
+# Bitácora 4
 ### Avance de **Miguel Fuster**
 Yo estuve encargado de corregir pequeños detalles dentro de la pantalla de IA y de explicar como es la arquitectura que mi compañero **Alan Torres** establecio para la aplicación
 ## Errores corregidos

@@ -98,6 +98,7 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 - [Día 3: Corrección de LogOut y documentacion (Valeria)](./DOC/bitacora3.md)
 - [Día 3: GoyoLingua descripcion y corrección de GoyitoIA (Miguel)](./DOC/bitacora4.md)
 - [Día 3: GoyoLingua HomePageTeoria y Widgets nuestros (Leonardo)](./DOC/bitacora5.md)
+- [Día 4: GoyoLingua Documentación de nuestro chat explicandolo detalle por detalle (Ricardo)](./DOC/bitacora6.md)
 
 ---
 

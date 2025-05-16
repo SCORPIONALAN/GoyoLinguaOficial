@@ -22,20 +22,34 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  Stream? messageStream;
-  String? myUsername, myName, myEmail, myPicture, chatRoomid, messageId;
-  File? selectedImage;
-  TextEditingController messagecontroller = TextEditingController();
-  final ImagePicker _picker = ImagePicker();
+  // Variables con las que vamos a estar trabajando en todo el documento
+  Stream?
+      messageStream; // Stream para cargar en tiempo real los mensajes con ayuda de un StreamBuilder que referencie a los mensajes de un chatRoom
+  String? myUsername,
+      myName,
+      myEmail,
+      myPicture,
+      chatRoomid,
+      messageId; // Elementos necesarios para cargar a nuestra base de datos (Por asi decirlo es como nuestro modelo)
+  File?
+      selectedImage; // File de la imagen que un futuro agarraremos con imagepicker
+  TextEditingController messagecontroller =
+      TextEditingController(); // controlador para cachar el valor del input
+  final ImagePicker _picker =
+      ImagePicker(); // instancia de image Picker para poder entrar a la galeria
 
   // Audio player variables
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  String? _currentlyPlayingUrl;
-  bool _isPlaying = false;
-  bool _isRecording = false;
-  String? _filePath;
-  final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
-  bool _recorderInitialized = false;
+  final AudioPlayer _audioPlayer =
+      AudioPlayer(); // instancia de audio player para reproducir audio
+  String?
+      _currentlyPlayingUrl; // URL del audio que actualmente estas escuchando
+  bool _isPlaying = false; // bandera para para el audio o continuarlo
+  bool _isRecording =
+      false; // Bandera que nos indica si acabamos o no de grabar
+  String? _filePath; // Ruta del audio de nuestro dispositivo
+  final FlutterSoundRecorder _recorder =
+      FlutterSoundRecorder(); // instancia de la grabadora
+  bool _recorderInitialized = false; // bandera para nuestra grabadora
 
   //Rescatar de Shared preferences nuestro usuario
   getthesharedpref() async {
@@ -50,6 +64,13 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {});
   }
 
+  // Funcion para obtener nuestro stream de mensajes que tienen en el chatRoom entre 2 personas
+  getandSetMessages() async {
+    messageStream = await DatabaseMethods().getChatRoomMessages(chatRoomid);
+    setState(() {});
+  }
+
+  // Función para cargar los elementos más escenciales al iniciar esta parte de la app
   ontheload() async {
     await getthesharedpref();
     await getandSetMessages();
@@ -71,6 +92,15 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
+  // Dispose sirve para cerrar el buffer o mejor dicho liberar los servicios
+  // Para por ejemplo cerrar el contexto del microfono o cerrar el audio
+  @override
+  void dispose() {
+    _recorder.closeRecorder();
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
   /*                  PARTE DE LOS PERMISOS                            */
   Future<void> _initialize() async {
     try {
@@ -78,14 +108,16 @@ class _ChatPageState extends State<ChatPage> {
       await _requestPermission();
 
       // Configurar el path para el archivo de audio
-      var tempDir = await getTemporaryDirectory();
+      var tempDir =
+          await getTemporaryDirectory(); // Obten donde se guardo el audio
       _filePath =
-          '${tempDir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.aac';
+          '${tempDir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.aac'; // Crea una ruta del audio
 
       // Inicializar el grabador
       await _recorder.openRecorder();
       _recorderInitialized = true;
     } catch (e) {
+      // Muestra un dialogo en caso de un error al inicializar la grabadora
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.red,
         content: Text("Error al inicializar el grabador de audio: $e"),
@@ -96,14 +128,16 @@ class _ChatPageState extends State<ChatPage> {
   Future<void> _requestPermission() async {
     var status = await Permission.microphone.status;
     if (!status.isGranted) {
-      await Permission.microphone.request();
+      await Permission.microphone.request(); // Permiso para el microfono
     }
     // solicitar permiso para acceder a la galeria
     await Permission.storage.request();
   }
 
+  // Funcion cuando presiones el icono de grabar
   Future openRecording() => showDialog(
       context: context,
+      // hacer pop Up para mostrar un apartado para cargar tu audio y subirlo
       builder: (context) => AlertDialog(
             title: Text(
               "Nota de voz",
@@ -120,13 +154,21 @@ class _ChatPageState extends State<ChatPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      _isRecording ? Icons.mic : Icons.mic_none,
+                      _isRecording
+                          ? Icons.mic
+                          : Icons
+                              .mic_none, // Renderizado condicional cuando el microfono esta siendo usado o no
                       size: 50,
-                      color: _isRecording ? Colors.red : Colors.grey,
+                      color: _isRecording
+                          ? Colors.red
+                          : Colors
+                              .grey, // Renderizado condicional cuando el microfono esta siendo usado o no
                     ),
                     SizedBox(height: 20.0),
                     Text(
-                      _isRecording ? "Grabando..." : "Presiona para grabar",
+                      _isRecording
+                          ? "Grabando..."
+                          : "Presiona para grabar", // Renderizado condicional cuando el microfono esta siendo usado o no
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
@@ -139,6 +181,7 @@ class _ChatPageState extends State<ChatPage> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       ),
+                      // Boton para iniciar y finalizar grabación
                       onPressed: () {
                         if (_isRecording) {
                           _stopRecording();
@@ -158,6 +201,7 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ),
                     SizedBox(height: 20),
+                    // Boton para subir la grabación
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: _isRecording
@@ -170,6 +214,7 @@ class _ChatPageState extends State<ChatPage> {
                         if (_isRecording) {
                           // No hacer nada mientras graba
                         } else {
+                          // En caso de que ya acabo de grabar dar la opción de subirlo a algun lado
                           _uploadFile();
                         }
                       },
@@ -187,6 +232,7 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             actions: [
+              // Boton para cancelar o inclusive dar click en cualquier otro lado y cancelar todo
               TextButton(
                 onPressed: () {
                   if (_isRecording) {
@@ -204,6 +250,8 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ],
           ));
+
+  // Proceso de Grabacion (Inicio)
   Future<void> _startRecording() async {
     try {
       // Verificar si se inicia la grabacion
@@ -241,10 +289,12 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+  // Proceso de Grabacion (Fin)
   Future<void> _stopRecording() async {
     try {
       if (_recorder.isRecording) {
-        await _recorder.stopRecorder();
+        await _recorder
+            .stopRecorder(); // Cuando acabemos de grabar deten la grabadora
       }
 
       setState(() {
@@ -345,7 +395,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future _getImageFromGallery() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery); // Otener la imagen con imagePicker
     if (image != null) {
       setState(() {
         selectedImage = File(image.path);
@@ -415,11 +466,6 @@ class _ChatPageState extends State<ChatPage> {
 
       UploadTask uploadTask = ref.putFile(file);
 
-      // Monitorear progreso de carga
-      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-        double progress = snapshot.bytesTransferred / snapshot.totalBytes;
-      });
-
       // Esperar a que se complete la carga
       TaskSnapshot snapshot = await uploadTask;
       String downloadURL = await snapshot.ref.getDownloadURL();
@@ -437,7 +483,7 @@ class _ChatPageState extends State<ChatPage> {
         "imgUrl": myPicture,
       };
 
-      messageId = randomAlphaNumeric(10);
+      messageId = randomAlphaNumeric(10); //Le creamos un ID unico
 
       await DatabaseMethods()
           .addMessage(chatRoomid!, messageId!, messageInfoMap)
@@ -470,6 +516,7 @@ class _ChatPageState extends State<ChatPage> {
 
   /*            SUBIR UN ARCHIVO DE IMAGEN             */
   Future<void> _uploadImage() async {
+    // Si no se selecciona nada
     if (selectedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.red,
@@ -490,11 +537,15 @@ class _ChatPageState extends State<ChatPage> {
     ));
 
     try {
-      String imageId = randomAlphaNumeric(10);
+      String imageId = randomAlphaNumeric(10); // Le creamos un ID Unico
+
+      // Obtenemos la referencia de donde lo queremos guardar
       Reference firebaseStorageRef =
           FirebaseStorage.instance.ref().child("chatImages").child(imageId);
-      final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
-      var downloadurl1 = await (await task).ref.getDownloadURL();
+      final UploadTask task = firebaseStorageRef
+          .putFile(selectedImage!); // Metemos esa imagen en la referencia
+      var downloadurl1 =
+          await (await task).ref.getDownloadURL(); // obtenemos en la url
 
       DateTime now = DateTime.now();
       String formattedDate = DateFormat('h:mma').format(now);
@@ -507,6 +558,7 @@ class _ChatPageState extends State<ChatPage> {
         "imgUrl": myPicture,
       };
 
+      // Y cargamos todo el contenido del mensaje dentro de la base de datos en un chatROOM
       messageId = randomAlphaNumeric(10);
       await DatabaseMethods()
           .addMessage(chatRoomid!, messageId!, messageInfoMap)
@@ -703,11 +755,7 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-  getandSetMessages() async {
-    messageStream = await DatabaseMethods().getChatRoomMessages(chatRoomid);
-    setState(() {});
-  }
-
+  // Widget encargado de mostrar todos los mensajes que hubo en ese chatRoom mediante un streamBuilder
   Widget chatMessage() {
     return StreamBuilder(
         stream: messageStream,
@@ -726,6 +774,7 @@ class _ChatPageState extends State<ChatPage> {
         });
   }
 
+  // Funcion para agregar un mensaje de lo mas normal (Ya si imagenes, ni audios, solo texto)
   addMessage(bool sendClicked) async {
     if (messagecontroller.text != "") {
       String message = messagecontroller.text;
@@ -749,15 +798,6 @@ class _ChatPageState extends State<ChatPage> {
         message = "";
       }
     }
-  }
-
-  // Dispose sirve para cerrar el buffer o mejor dicho liberar los servicios
-  // Para por ejemplo cerrar el contexto del microfono o cerrar el audio
-  @override
-  void dispose() {
-    _recorder.closeRecorder();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override
