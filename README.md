@@ -104,6 +104,17 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 - [Navegador para enrutamientos](./DOC/componentes/navegador/navegador.md)
 
 ---
+## Arquitectura del frontend con el backend
+
+![backend de Goyito](./DOC/img/backend.png)
+
+---
+## Capturas de la base de datos
+
+### Base de datos
+![Base de datos](./DOC/img/Base%20de%20datos.png)
+![Storage o buckets de Firebase](./DOC/img/storage.png)
+![Autenticación](./DOC/img/auth.png)
 
 ## 📘 Bitácora del proyecto
 
