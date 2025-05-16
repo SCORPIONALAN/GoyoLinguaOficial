@@ -37,116 +37,61 @@ class _ChatIAPageState extends State<ChatIAPage> {
     myEmail = await SharedpreferenceHelper.getUserEmail();
     myPicture = await SharedpreferenceHelper.getUserImage();
     myUserId = await SharedpreferenceHelper.getUserId();
+    // Chatroom para que tu hables con goyito
     chatRoomid = "GOYITO@IA_${myUsername}";
 
+    // Información del target y el sender (Target -> API de Goyito o mejor dicho su user. Sender -> El usuario corriente)
     Map<String, dynamic> chatInfoMap = {
       "users": [myUsername, "GOYITO@IA"],
     };
+    // Si no existe el chat Goyito entonces crealo
     if (!await DatabaseMethods().getChatRoom(chatRoomid)) {
       await DatabaseMethods().createChatRoom(chatRoomid!, chatInfoMap);
     }
     setState(() {});
   }
 
+  // Parte importante, ya que los Streams vienen reemplazando a los sockets, ya que estos tambien permiten comunicación en tiempo real
   getandSetMessages() async {
-    messageStream = await DatabaseMethods().getChatRoomMessages(chatRoomid);
+    messageStream = await DatabaseMethods().getChatRoomMessages(
+        chatRoomid); // Traeme en todo momento los chats desde la base de datos y ordenados
     setState(() {});
   }
 
+  // OnTheLoad Va a ser una función a la que vamos a cargar de toda la información que debe cargar si o si al momento de moverte a esta parte
   ontheload() async {
-    await getthesharedpref();
-    await getandSetMessages();
+    await getthesharedpref(); // Obtener nuestro usuario actual
+    await getandSetMessages(); // Obtener el stream de mensajes mandados y recibidos
   }
 
-  @override
-  void initState() {
-    super.initState();
-    ontheload();
-  }
-
-  /*            MOSTRAR LOS MENSAJES                    */
-  Widget chatMessageTile(BuildContext context, dynamic data, bool sendByMe) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return Row(
-      mainAxisAlignment:
-          sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        Flexible(
-            child: Container(
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  bottomRight:
-                      sendByMe ? Radius.circular(0) : Radius.circular(24),
-                  topRight: Radius.circular(24),
-                  bottomLeft:
-                      sendByMe ? Radius.circular(24) : Radius.circular(0)),
-              color: sendByMe
-                  ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).colorScheme.onSecondary),
-          child: Text(
-            data["message"],
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: screenWidth * 0.035,
-                fontWeight: FontWeight.w600),
-          ),
-        ))
-      ],
-    );
-  }
-
-  Widget chatMessage() {
-    return StreamBuilder(
-        stream: messageStream,
-        builder: (context, AsyncSnapshot snapshot) {
-          return snapshot.hasData
-              ? ListView.builder(
-                  padding: EdgeInsets.only(bottom: 70),
-                  itemCount: snapshot.data.docs.length,
-                  reverse: true,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot ds = snapshot.data.docs[index];
-                    // Verifica si el mensaje fue enviado por el usuario actual
-                    // Considera que la respuesta de la IA puede venir con sendBy o sendby
-                    bool isSentByMe = myUsername == ds["sendBy"];
-                    return chatMessageTile(context, ds, isSentByMe);
-                  })
-              : Center(child: CircularProgressIndicator());
-        });
-  }
-
-  //Envios del frontend al backend
+  //Envios del frontend al backend GOYITOAPI en render
   Future<void> sendMessageToBackend(String message) async {
     try {
       setState(() {
         _isLoading = true;
       });
-
+      // Hacemos una peticion http, en este caso POST
       final response = await http.post(
         Uri.parse(backendUrl),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type':
+              'application/json', // Mandamos información en formato JSON
         },
+        //Que va a llevar? Va a llevar la pregunta, el user id y el username
+        // el user id dentro del backend va a ir a una parte
         body: json.encode(
             {'question': message, 'uid': myUserId, 'username': myUsername}),
       );
 
-      if (response.statusCode == 200) {
-        // El bot responde desde el backend al frontend mediante firebase
-        print("Mensaje enviado al backend correctamente");
-      } else {
-        ;
-        // Manejo de error
+      // El bot responde desde el backend al frontend mediante firebase
+      if (response.statusCode != 200) {
+        // Si algo falla tirame un error en forma de ventana emergente hacia abajo
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error al comunicarse con la IA')),
         );
       }
     } catch (e) {
-      print("Excepción al enviar mensaje: $e");
+      // Si algo sale mal, entonces muestra el mensaje de error en la conexion
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error de conexión')),
       );
@@ -154,12 +99,14 @@ class _ChatIAPageState extends State<ChatIAPage> {
       setState(() {
         _isLoading = false;
       });
+      //Independiente si todo esta bien o mal, tenemos que finalizar el proceso para que podamos mandar otro mensaje y no se quede atascado
     }
   }
 
   // Mensaje por parte del usuario
   addMessage(bool sendClicked) async {
-    if (messagecontroller.text != "") {
+    // No se esta mandando mensaje y el input no esta vacio, procede a...
+    if (!_isLoading && messagecontroller.text != "") {
       String message = messagecontroller.text;
       messagecontroller.text = "";
       DateTime now = DateTime.now();
@@ -187,6 +134,84 @@ class _ChatIAPageState extends State<ChatIAPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    ontheload();
+  }
+
+  /*            MOSTRAR LOS MENSAJES                    */
+
+  // Widget que guarda el mensaje dentro de un contenedor que dependiendo de si es mio o del otro cambia el formato y color
+  Widget chatMessageTile(BuildContext context, dynamic data, bool sendByMe) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Row(
+      mainAxisAlignment: sendByMe
+          ? MainAxisAlignment.end
+          : MainAxisAlignment
+              .start, // Si es mio muestralo a la derecha, si no lo es muestra a la izquierda
+      children: [
+        Flexible(
+            child: Container(
+          padding: EdgeInsets.all(16),
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  bottomRight: sendByMe
+                      ? Radius.circular(0)
+                      : Radius.circular(
+                          24), // No redondees el extremo derecho inferior si el mensaje es mio
+                  topRight: Radius.circular(24),
+                  bottomLeft: sendByMe
+                      ? Radius.circular(24)
+                      : Radius.circular(
+                          0)), // No redondees el extremo izquierdo inferior si es mensaje no es mio
+              color: sendByMe
+                  ? Theme.of(context)
+                      .colorScheme
+                      .secondary // Lo mande yo? mandame un color azul
+                  : Theme.of(context)
+                      .colorScheme
+                      .onSecondary), // no lo mande yo? mandamelo en un color moradito
+          // Inyectamos el mensaje independientemente si es mio o no
+          child: Text(
+            data["message"],
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: screenWidth * 0.035,
+                fontWeight: FontWeight.w600),
+          ),
+        ))
+      ],
+    );
+  }
+
+  // El stream va a traer todos los mensajes entre la IA y el usuario que la consulta en tiempo real
+  Widget chatMessage() {
+    return StreamBuilder(
+        stream: messageStream,
+        builder: (context, AsyncSnapshot snapshot) {
+          return snapshot.hasData // Existe información?
+              ? ListView.builder(
+                  padding: EdgeInsets.only(bottom: 70),
+                  itemCount: snapshot.data.docs
+                      .length, // Accede a cada item del documento del stream
+                  reverse: true,
+                  itemBuilder: (context, index) {
+                    // Por cada item ...
+                    DocumentSnapshot ds = snapshot
+                        .data.docs[index]; //obten el mensaje del index pedido
+                    bool isSentByMe = myUsername == ds["sendBy"];
+                    return chatMessageTile(context, ds,
+                        isSentByMe); // hay que pasarle el contexto, el document snapshot (cierto mensaje), es mandado por mi ese cierto mensaje?
+                  })
+              : Center(
+                  child: CircularProgressIndicator()); //Carga en lo que se crea
+        });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -197,34 +222,27 @@ class _ChatIAPageState extends State<ChatIAPage> {
         body: SafeArea(
           child: Column(
             children: [
-              // Encabezado
+              /*                        ENCABEZADO DE GOYITOIA                   */
               Padding(
                 padding: const EdgeInsets.only(left: 10, top: 10),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios_new_outlined,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                    SizedBox(width: screenWidth / 7),
+                    /*                        FOTO DE PERFIL DE NUESTRO QUERIDO GOYITO             */
                     CircleAvatar(
-                      radius: screenWidth * 0.04,
-                      backgroundImage: NetworkImage(widget.profileurl),
+                      radius: screenWidth * 0.06,
+                      backgroundImage: NetworkImage(widget
+                          .profileurl), //Obtenemos el URL del widget, recordemos que esta información la mandamos en el navigator.dart
                     ),
                     SizedBox(width: 10),
+                    // Nombre de GOYITO
                     Flexible(
                       child: Container(
                         margin: EdgeInsets.only(right: 10),
                         child: Text(
-                          widget.name,
+                          widget.name, // NOMBRE DE GOYITO
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: screenWidth * 0.05,
                             fontWeight: FontWeight.w700,
                           ),
@@ -252,7 +270,7 @@ class _ChatIAPageState extends State<ChatIAPage> {
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
                     ),
-                    child: chatMessage(),
+                    child: chatMessage(), // Contenedor que carga los mensajes
                   ),
                 ),
               ),
@@ -288,9 +306,12 @@ class _ChatIAPageState extends State<ChatIAPage> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () {
-                        addMessage(true);
-                      },
+                      // Esta cargando? entonces no hagas nada, si si? entonces manda a llamar la funcion
+                      onTap: _isLoading
+                          ? null
+                          : () {
+                              addMessage(true);
+                            },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -300,7 +321,7 @@ class _ChatIAPageState extends State<ChatIAPage> {
                               : Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: _isLoading
+                        child: _isLoading //Efecto en caso de enviar mensaje
                             ? SizedBox(
                                 width: 20,
                                 height: 20,
