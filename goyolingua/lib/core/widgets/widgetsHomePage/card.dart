@@ -22,7 +22,8 @@ class PersonalCard extends StatelessWidget {
     final profileURL = userData["Image"];
     return GestureDetector(
       onTap: () async {
-        var chatRoomId = getChatRoomIdbyUsername(myUsername!, username);
+        var chatRoomId = getChatRoomIdbyUsername(
+            myUsername!.toUpperCase(), username); // Ultima modificación
         Map<String, dynamic> chatInfoMap = {
           "users": [myUsername, username],
         };
