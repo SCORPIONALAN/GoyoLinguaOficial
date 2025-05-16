@@ -71,6 +71,8 @@ Este tendrá una **API privada** conectada con **OpenAI**, donde procesaremos:
 🤖 Chat con IA educativa (¡pregunta y aprende!)  
 🔐 Manejo seguro de nuestras API keys
 
+**Link de nuestro backend**
+- [GoyoLinguaAPI](https://github.com/SCORPIONALAN/GoyoLinguaAPI)
 > Todo esto se procesa en el servidor, y el frontend solo recibe respuestas optimizadas 💡
 
 ---
