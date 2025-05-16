@@ -81,13 +81,27 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 
 - **Frontend (Flutter)**: Interfaz y experiencia de usuario.
 - **Firebase**: Gestión de datos, autenticación y almacenamiento.
-- **Backend (API + OpenAI)**: Procesamiento intensivo, correcciones, ejercicios conversacionales.
+- **Backend (API + DeepSeek)**: Procesamiento intensivo, correcciones, ejercicios conversacionales.
 
 **¿Qué ventajas tiene nuestra arquitectura?**
 🧩 Modularidad  
 🔁 Escalabilidad  
 🛡️ Seguridad  
 🧼 Mantenimiento limpio
+
+---
+
+## 🏗️Arquitectura de todo el proyecto
+- [Inicio sesion](./DOC/componentes/onBoarding/autenticacion.md)
+- [Pagina para completar el inicio de sesion](./DOC/componentes/onBoarding/completar.md)
+- [Pagina Main de las lecciones](./DOC/componentes/Lecciones/homePage.md)
+- [Widgets de nuestras Lecciones](./DOC/componentes/Lecciones/carga_muestra_leccion.md)
+- [Pagina de inicio de nuestro chat](./DOC/componentes/chat_inicio/chatHomePage.md)
+- [Widgets de nuestra pagina de inicio del chat](./DOC/componentes/chat_inicio/widgetsHomePAge.md)
+- [Pagina de chat personalizada](./DOC/componentes/chat_main/chat.md)
+- [Inteligencia Artificial](./DOC/componentes/GoyitoIA/goyitoIA.md)
+- [Perfil (subir imagenes cerrar sesión)](./DOC/componentes/perfil/perfil.md)
+- [Navegador para enrutamientos](./DOC/componentes/navegador/navegador.md)
 
 ---
 
@@ -101,7 +115,6 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 - [Día 4: GoyoLingua Documentación de nuestro chat explicandolo detalle por detalle (Ricardo)](./DOC/bitacora6.md)
 - [Día 4: GoyoLingua Explicacion de ChatInicio y de navegador](./DOC/bitacora7.md)
 ---
-
 ## 🚀 ¡Únete a GoyoLingua!
 
 Gracias por ser parte de este proyecto que busca revolucionar el aprendizaje del inglés en nuestra facultad.  
