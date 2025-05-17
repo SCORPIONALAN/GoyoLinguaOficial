@@ -40,6 +40,7 @@
 
 ## Fuentes personalizadas
 - **Raleway:** Familia de fuentes con varios pesos (100-900) desde Thin hasta Black.
+- [Fuente oficial](https://fonts.google.com/specimen/Raleway)
 
 ## Recursos (assets)
 - **Imágenes:** 
