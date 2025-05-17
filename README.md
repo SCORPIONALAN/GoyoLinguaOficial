@@ -109,7 +109,8 @@ Nuestra arquitectura puede verse como una especie de **microservicios**, donde c
 - **Utils**
 - [Funciones para base de Datos](./DOC/componentes/utils/base_de_datos.md)
 - [Shared Preferences](./DOC/componentes/utils/shared_preferences.md)
-
+- **Dependencias**
+- [Dependencias que usamos en el proyecto](./DOC/componentes/dependencias/dependencias.md)
 ---
 ## Arquitectura general de la APP
 ![Arquitectura de todo](./DOC/img//arqDeTodo.png)
