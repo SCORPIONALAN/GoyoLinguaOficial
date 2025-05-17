@@ -7,11 +7,17 @@ Somos una comunidad de estudiantes de la **FES Aragón** dedicados a brindar apo
 
 ---
 ## 😁 Conoce a nuestros bellos programadores
+
 **TORRES MORA ALAN GIOVANNI** `32010598-8`
+
 **NUÑEZ ZARAGOZA RICARDO MISAEL** `32000752-1`
+
 **FUSTER BARBARA MIGUEL AXEL** `31501054-7`
+
 **CARMONA LÓPEZ VALERIA** `32003659-2`
+
 **GARCÍA MICETTE LEONARDO** `32031657-3`
+
 ---
 ## 🎯 ¿Cuál es el objetivo de nuestro proyecto?
 
